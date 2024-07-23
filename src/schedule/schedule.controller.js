@@ -10,7 +10,33 @@ export function schedule(app, options, done) {
 	});
 
 	app.get('/lesson', async (req, res) => {
-		const result = await schedulesCollection.find(req.body || {}).toArray();
+		const result = await schedulesCollection
+			.aggregate([
+				{
+					$lookup: {
+						from: 'users',
+						let: { trainer_id: '$trainer_id' },
+						pipeline: [
+							{
+								$match: {
+									$expr: { $eq: ['$_id', { $toObjectId: '$$trainer_id' }] }
+								}
+							},
+							{ $limit: 1 },
+							{ $project: { firstname: 1, lastname: 1, surname: 1 } }
+						],
+						as: 'trainer'
+					}
+				},
+				{
+					$unwind: {
+						path: '$trainer',
+						preserveNullAndEmptyArrays: true
+					}
+				}
+			])
+			.toArray();
+
 		res.send(result);
 	});
 

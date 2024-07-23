@@ -8,8 +8,8 @@ export function place(app, options, done) {
 		res.send(result);
 	});
 
-	app.get('/place', (req, res) => {
-		const result = placesCollection.find(req.body || {}).toArray();
+	app.get('/place', async (req, res) => {
+		const result = await placesCollection.find(req.body || {}).toArray();
 		res.send(result);
 	});
 

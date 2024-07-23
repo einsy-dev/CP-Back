@@ -38,7 +38,7 @@ export function user(app, options, done) {
 
 	app.get('/:id', { schema: { params: UserId } }, async (req, res) => {
 		const result = await usersCollection.find({
-			_id: app.mongo.ObjectId(req.params.id)
+			_id: new app.mongo.ObjectId(req.params.id)
 		});
 		res.send(result);
 	});

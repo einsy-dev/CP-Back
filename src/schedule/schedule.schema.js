@@ -3,8 +3,8 @@ const Schedule = {
 	additionalProperties: false,
 	properties: {
 		space_id: { type: 'string' },
-		trainer_id: { type: 'string' },
-		trainer_comments: { type: 'string', default: null },
+		trainer_id: { type: 'object' },
+		trainer_comment: { type: 'string', default: null },
 		start: { type: 'string', default: new Date().toISOString() },
 		exercises: { type: 'array', default: [] }
 	},
