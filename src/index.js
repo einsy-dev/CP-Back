@@ -6,6 +6,8 @@ import * as cors from '@fastify/cors';
 import * as fastifyMultipart from '@fastify/multipart';
 import { user } from './user/user.controller.js';
 import { auth } from './auth/auth.controller.js';
+import { place } from './place/place.controller.js';
+import { exercise } from './exercise/exercise.controller.js';
 import { schedule } from './schedule/schedule.controller.js';
 
 const fastify = Fastify();
@@ -43,6 +45,8 @@ fastify.register(jwt, { secret: fastify.config.SECRET });
 fastify.register(fastifyMultipart, { attachFieldsToBody: true });
 fastify.register(user);
 fastify.register(auth, { prefix: '/auth' });
+fastify.register(place);
+fastify.register(exercise);
 fastify.register(schedule);
 
 fastify.listen({ port: fastify.config.PORT }, function (err) {

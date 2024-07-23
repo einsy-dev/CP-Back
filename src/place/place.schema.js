@@ -1,15 +1,14 @@
-const Exercise = {
+const Place = {
 	type: 'object',
 	additionalProperties: false,
 	properties: {
-		img: { type: 'number', default: null },
 		name: { type: 'string' },
 		description: { type: 'string', default: null }
 	},
 	required: ['name']
 };
 
-const ExerciseId = {
+const PlaceId = {
 	type: 'object',
 	additionalProperties: false,
 	properties: {
@@ -21,4 +20,4 @@ const ExerciseId = {
 	}
 };
 
-export { Exercise, ExerciseId };
+export { Place, PlaceId };

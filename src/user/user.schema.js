@@ -1,5 +1,6 @@
 const UserEntity = {
 	type: 'object',
+	additionalProperties: false,
 	properties: {
 		firstname: { type: 'string', default: null },
 		lastname: { type: 'string', default: null },
@@ -17,6 +18,7 @@ const UserEntity = {
 
 const UserId = {
 	type: 'object',
+	additionalProperties: false,
 	properties: {
 		id: {
 			type: 'string',
