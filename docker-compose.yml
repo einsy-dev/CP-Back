@@ -2,14 +2,8 @@ services:
 
   server:
     container_name: server
-    build: .
+    build: ./
     env_file:
       - .env
     ports:
       - 8001:8001
-    networks:
-      - backend
-
-networks:
-  backend:
-    driver: bridge

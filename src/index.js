@@ -49,7 +49,7 @@ fastify.register(place);
 fastify.register(exercise);
 fastify.register(schedule);
 
-fastify.listen({ port: fastify.config.PORT }, function (err) {
+fastify.listen({ port: fastify.config.PORT, host: '0.0.0.0' }, function (err) {
 	if (err) {
 		fastify.log.error(err);
 		process.exit(1);
