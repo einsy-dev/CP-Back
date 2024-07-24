@@ -3,10 +3,13 @@ const Schedule = {
 	additionalProperties: false,
 	properties: {
 		space_id: { type: 'string' },
-		trainer_id: { type: 'object' },
+		trainer_id: { type: 'string' },
 		trainer_comment: { type: 'string', default: null },
 		start: { type: 'string', default: new Date().toISOString() },
-		exercises: { type: 'array', default: [] }
+		exercises: {
+			type: 'array',
+			default: [{ id: '66a0abdfda4bdec06057de98', isComplete: false }]
+		}
 	},
 	required: ['space_id', 'trainer_id', 'start']
 };

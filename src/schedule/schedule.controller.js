@@ -1,8 +1,8 @@
+import { agregateSchedule } from './schedule.agregate.js';
 import { Schedule, ScheduleId } from './schedule.schema.js';
 
 export function schedule(app, options, done) {
 	const schedulesCollection = app.mongo.db.collection('schedules');
-	const exercisesCollection = app.mongo.db.collection('exercises');
 
 	app.post('/lesson', { schema: { body: Schedule } }, async (req, res) => {
 		const result = await schedulesCollection.insertOne(req.body);
@@ -13,27 +13,15 @@ export function schedule(app, options, done) {
 		const result = await schedulesCollection
 			.aggregate([
 				{
-					$lookup: {
-						from: 'users',
-						let: { trainer_id: '$trainer_id' },
-						pipeline: [
-							{
-								$match: {
-									$expr: { $eq: ['$_id', { $toObjectId: '$$trainer_id' }] }
-								}
-							},
-							{ $limit: 1 },
-							{ $project: { firstname: 1, lastname: 1, surname: 1 } }
-						],
-						as: 'trainer'
+					$match: {
+						start: {
+							$gt:
+								req.query.start ||
+								new Date(new Date().setHours(0, 0, 0, 0)).toISOString()
+						}
 					}
 				},
-				{
-					$unwind: {
-						path: '$trainer',
-						preserveNullAndEmptyArrays: true
-					}
-				}
+				...agregateSchedule
 			])
 			.toArray();
 
@@ -44,11 +32,13 @@ export function schedule(app, options, done) {
 		'/lesson/:id',
 		{ schema: { params: ScheduleId } },
 		async (req, res) => {
-			const result = await schedulesCollection.findOne({
-				_id: app.mongo.ObjectId(req.params.id)
-			});
-			result.exercises = await exercisesCollection
-				.find({ _id: { $in: result.exercises } })
+			const result = await schedulesCollection
+				.aggregate([
+					{
+						$match: { $expr: { $eq: ['$_id', { $toObjectId: req.params.id }] } }
+					},
+					...agregateSchedule
+				])
 				.toArray();
 			res.send(result);
 		}
