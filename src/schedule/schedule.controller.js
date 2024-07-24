@@ -21,6 +21,7 @@ export function schedule(app, options, done) {
 						}
 					}
 				},
+				{ $limit: +req.query.limit || 1 },
 				...agregateSchedule
 			])
 			.toArray();
