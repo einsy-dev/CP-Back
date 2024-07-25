@@ -33,15 +33,13 @@ export function schedule(app, options, done) {
 		'/lesson/:id',
 		{ schema: { params: ScheduleId } },
 		async (req, res) => {
-			const result = await schedulesCollection.aggregate([
-				{
-					$match: {
-						_id: new app.mongo.ObjectId(req.params.id)
-					}
-				},
-				{ $limit: 1 },
-				...agregateSchedule
-			]);
+			const [result] = await schedulesCollection
+				.aggregate([
+					{ $match: { _id: new app.mongo.ObjectId(req.params.id) } },
+					{ $limit: 1 },
+					...agregateSchedule
+				])
+				.toArray();
 			res.send(result);
 		}
 	);
