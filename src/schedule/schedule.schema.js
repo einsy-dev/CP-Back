@@ -9,7 +9,8 @@ const Schedule = {
 		exercises: {
 			type: 'array',
 			default: [{ id: '66a0abdfda4bdec06057de98', isComplete: false }]
-		}
+		},
+		students: { type: 'array', default: [] }
 	},
 	required: ['space_id', 'trainer_id', 'start']
 };
