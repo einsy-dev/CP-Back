@@ -5,11 +5,7 @@ import * as env from '@fastify/env';
 import * as cors from '@fastify/cors';
 import * as Static from '@fastify/static';
 import * as multipart from '@fastify/multipart';
-import { user } from './user/user.controller.js';
-import { auth } from './auth/auth.controller.js';
-import { place } from './place/place.controller.js';
-import { exercise } from './exercise/exercise.controller.js';
-import { schedule } from './schedule/schedule.controller.js';
+import { user, auth, place, exercise, schedule } from './components/index.js';
 
 const fastify = Fastify();
 await fastify.register(env, {
