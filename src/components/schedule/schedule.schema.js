@@ -10,7 +10,8 @@ const Schedule = {
 			type: 'array',
 			default: [{ id: '66a0abdfda4bdec06057de98', isComplete: false }]
 		},
-		students: { type: 'array', default: [] }
+		students: { type: 'array', default: [] },
+		isSubmitted: { type: 'boolean', default: false }
 	},
 	required: ['space_id', 'trainer_id', 'start']
 };
