@@ -69,5 +69,6 @@ export const agregateSchedule = [
 			preserveNullAndEmptyArrays: true
 		}
 	},
-	{ $project: { space_id: 0, trainer_id: 0 } }
+	{ $project: { space_id: 0, trainer_id: 0 } },
+	{ $sort: { start: 1 } }
 ];
