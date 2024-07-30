@@ -41,8 +41,7 @@ export const agregateSchedule = [
 						}
 					}
 				},
-				{ $set: { isComplete: '$$exercises.isComplete' } },
-				{ $unwind: '$isComplete' }
+				{ $sort: { start: 1 } }
 			],
 			as: 'exercises'
 		}
