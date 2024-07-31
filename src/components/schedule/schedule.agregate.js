@@ -33,11 +33,33 @@ export const agregateSchedule = [
 								'$_id',
 								{
 									$map: {
-										input: '$$exercises.id',
-										in: { $toObjectId: '$$this' }
+										input: '$$exercises',
+										in: { $toObjectId: '$$this.id' }
 									}
 								}
 							]
+						}
+					}
+				},
+				{
+					$project: {
+						name: 1,
+						img: 1,
+						description: 1,
+						isComplete: {
+							$reduce: {
+								input: '$$exercises',
+								initialValue: false,
+								in: {
+									$cond: [
+										{
+											$eq: ['$_id', { $toObjectId: '$$this.id' }]
+										},
+										'$$this.isComplete',
+										'$$value'
+									]
+								}
+							}
 						}
 					}
 				},
