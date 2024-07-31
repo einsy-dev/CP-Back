@@ -33,16 +33,37 @@ export const agregateSchedule = [
 								'$_id',
 								{
 									$map: {
-										input: '$$exercises.id',
-										in: { $toObjectId: '$$this' }
+										input: '$$exercises',
+										in: { $toObjectId: '$$this.id' }
 									}
 								}
 							]
 						}
 					}
 				},
-				{ $set: { isComplete: '$$exercises.isComplete' } },
-				{ $unwind: '$isComplete' }
+				{
+					$project: {
+						name: 1,
+						img: 1,
+						description: 1,
+						isComplete: {
+							$reduce: {
+								input: '$$exercises',
+								initialValue: false,
+								in: {
+									$cond: [
+										{
+											$eq: ['$_id', { $toObjectId: '$$this.id' }]
+										},
+										'$$this.isComplete',
+										'$$value'
+									]
+								}
+							}
+						}
+					}
+				},
+				{ $sort: { start: 1 } }
 			],
 			as: 'exercises'
 		}
@@ -69,5 +90,6 @@ export const agregateSchedule = [
 			preserveNullAndEmptyArrays: true
 		}
 	},
-	{ $project: { space_id: 0, trainer_id: 0 } }
+	{ $project: { space_id: 0, trainer_id: 0 } },
+	{ $sort: { start: 1 } }
 ];

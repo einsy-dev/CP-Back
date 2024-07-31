@@ -5,7 +5,14 @@ import * as env from '@fastify/env';
 import * as cors from '@fastify/cors';
 import * as Static from '@fastify/static';
 import * as multipart from '@fastify/multipart';
-import { user, auth, place, exercise, schedule } from './components/index.js';
+import {
+	user,
+	auth,
+	place,
+	exercise,
+	schedule,
+	group
+} from './components/index.js';
 
 const fastify = Fastify();
 await fastify.register(env, {
@@ -53,6 +60,7 @@ fastify.register(auth, { prefix: '/auth' });
 fastify.register(place);
 fastify.register(exercise);
 fastify.register(schedule);
+fastify.register(group);
 
 fastify.listen({ port: fastify.config.PORT, host: '0.0.0.0' }, function (err) {
 	if (err) {
