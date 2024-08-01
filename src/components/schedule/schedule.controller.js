@@ -15,12 +15,16 @@ export function schedule(app, options, done) {
 				{
 					$match: {
 						start: {
-							$gt:
+							$gte:
 								req.query.start ||
-								new Date(new Date().setHours(0, 0, 0, 0)).toISOString()
+								new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
+							$lt:
+								req.query.end ||
+								new Date(new Date().setHours(23, 59, 59, 999)).toISOString()
 						}
 					}
 				},
+				{ $sort: { start: 1 } },
 				{ $limit: +req.query.limit || 1 },
 				...agregateSchedule
 			])
@@ -36,7 +40,6 @@ export function schedule(app, options, done) {
 			const [result] = await schedulesCollection
 				.aggregate([
 					{ $match: { _id: new app.mongo.ObjectId(req.params.id) } },
-					{ $limit: 1 },
 					...agregateSchedule
 				])
 				.toArray();
@@ -49,7 +52,7 @@ export function schedule(app, options, done) {
 		{ schema: { params: ScheduleId } },
 		async (req, res) => {
 			const result = await schedulesCollection.updateOne(
-				{ _id: app.mongo.ObjectId(req.params.id) },
+				{ _id: new app.mongo.ObjectId(req.params.id) },
 				{ $set: req.body }
 			);
 			res.send(result);
