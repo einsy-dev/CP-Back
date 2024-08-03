@@ -10,7 +10,7 @@ import {
 	auth,
 	place,
 	exercise,
-	schedule,
+	Lesson,
 	group
 } from './components/index.js';
 
@@ -59,7 +59,7 @@ fastify.register(user);
 fastify.register(auth, { prefix: '/auth' });
 fastify.register(place);
 fastify.register(exercise);
-fastify.register(schedule);
+fastify.register(Lesson);
 fastify.register(group);
 
 fastify.listen({ port: fastify.config.PORT, host: '0.0.0.0' }, function (err) {

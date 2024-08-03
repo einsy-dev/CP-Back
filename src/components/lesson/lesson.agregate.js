@@ -1,4 +1,4 @@
-export const agregateSchedule = [
+export const LessonAgregate = [
 	{
 		$lookup: {
 			from: 'users',

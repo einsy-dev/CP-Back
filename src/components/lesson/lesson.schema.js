@@ -1,4 +1,4 @@
-const Schedule = {
+const lesson = {
 	type: 'object',
 	additionalProperties: false,
 	properties: {
@@ -15,7 +15,7 @@ const Schedule = {
 	required: ['space_id', 'trainer_id', 'start']
 };
 
-const ScheduleId = {
+const lessonId = {
 	type: 'object',
 	additionalProperties: false,
 	properties: {
@@ -27,4 +27,4 @@ const ScheduleId = {
 	}
 };
 
-export { Schedule, ScheduleId };
+export default { lesson, lessonId };
