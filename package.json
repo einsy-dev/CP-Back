@@ -16,7 +16,7 @@
     "socket.io": "^4.7.5"
   },
   "scripts": {
-    "start": "nodemon src/index.js",
+    "start": "bun --watch src/index.js",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "format": "prettier --write src"

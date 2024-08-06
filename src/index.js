@@ -10,8 +10,9 @@ import {
 	auth,
 	place,
 	exercise,
-	Lesson,
-	group
+	lesson,
+	group,
+	checkList
 } from './components/index.js';
 
 const fastify = Fastify();
@@ -50,6 +51,7 @@ await fastify.register(mongodb, {
 	url: fastify.config.MONGODB_URI,
 	forceClose: true
 });
+
 fastify.register(jwt, { secret: fastify.config.SECRET });
 fastify.register(multipart, {
 	attachFieldsToBody: true,
@@ -59,8 +61,9 @@ fastify.register(user);
 fastify.register(auth, { prefix: '/auth' });
 fastify.register(place);
 fastify.register(exercise);
-fastify.register(Lesson);
+fastify.register(lesson);
 fastify.register(group);
+fastify.register(checkList);
 
 fastify.listen({ port: fastify.config.PORT, host: '0.0.0.0' }, function (err) {
 	if (err) {
