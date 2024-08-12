@@ -7,7 +7,7 @@ export function auth(app, options, done) {
 			password: password.value
 		});
 		if (!user) {
-			res.send({ error: 'Invalid email or password' });
+			res.code(401).send({ error: 'Invalid email or password' });
 			return;
 		}
 		const { _id, role } = user;

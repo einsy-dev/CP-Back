@@ -1,4 +1,4 @@
-const checkList = {
+const post = {
 	type: 'object',
 	additionalProperties: false,
 	properties: {
@@ -26,4 +26,14 @@ const checkList = {
 	required: ['lesson_id']
 };
 
-export default { checkList };
+const get = {
+	type: 'object',
+	additionalProperties: false,
+	properties: {
+		lesson_id: { type: 'string' },
+		student_id: { type: 'string' }
+	},
+	required: ['lesson_id']
+};
+
+export default { post, get };

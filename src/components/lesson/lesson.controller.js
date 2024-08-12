@@ -2,15 +2,13 @@ import schema from './lesson.schema.js';
 import { Id } from '../../shared/schema.js';
 import {
 	trainerAgregate,
-	exercisesAgregate,
-	placeAgregate,
-	checkListAgregate
+	placeAgregate
 } from '../../shared/agregation/index.js';
 
 export function lesson(app, options, done) {
 	const LessonsCollection = app.mongo.db.collection('lessons');
 
-	app.post('/lesson', { schema: { body: schema.lesson } }, async (req, res) => {
+	app.post('/lesson', { schema: { body: schema.post } }, async (req, res) => {
 		const result = await LessonsCollection.insertOne(req.body);
 		res.send(result);
 	});
@@ -47,9 +45,7 @@ export function lesson(app, options, done) {
 		const [result] = await LessonsCollection.aggregate([
 			{ $match: { _id: new app.mongo.ObjectId(req.params.id) } },
 			...trainerAgregate,
-			...placeAgregate,
-			...exercisesAgregate,
-			...checkListAgregate
+			...placeAgregate
 		]).toArray();
 		res.send(result);
 	});

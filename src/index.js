@@ -5,6 +5,8 @@ import * as env from '@fastify/env';
 import * as cors from '@fastify/cors';
 import * as Static from '@fastify/static';
 import * as multipart from '@fastify/multipart';
+import * as swagger from '@fastify/swagger';
+import * as swaggerUI from '@fastify/swagger-ui';
 import {
 	user,
 	auth,
@@ -16,6 +18,18 @@ import {
 } from './components/index.js';
 
 const fastify = Fastify();
+
+fastify.register(swagger);
+fastify.register(swaggerUI, {
+	routePrefix: '/docs',
+	uiConfig: {
+		docExpansion: 'list',
+		deepLinking: false
+	},
+	staticCSP: true,
+	transformStaticCSP: (header) => header
+});
+
 await fastify.register(env, {
 	dotenv: true,
 	schema: {
@@ -47,7 +61,7 @@ fastify.addHook('onRequest', async (req, res) => {
 	}
 });
 
-await fastify.register(mongodb, {
+fastify.register(mongodb, {
 	url: fastify.config.MONGODB_URI,
 	forceClose: true
 });
@@ -64,6 +78,9 @@ fastify.register(exercise);
 fastify.register(lesson);
 fastify.register(group);
 fastify.register(checkList);
+
+await fastify.ready();
+fastify.swagger();
 
 fastify.listen({ port: fastify.config.PORT, host: '0.0.0.0' }, function (err) {
 	if (err) {

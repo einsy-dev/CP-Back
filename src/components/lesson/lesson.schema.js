@@ -1,4 +1,4 @@
-const lesson = {
+const post = {
 	type: 'object',
 	additionalProperties: false,
 	properties: {
@@ -10,4 +10,4 @@ const lesson = {
 	required: ['space_id', 'trainer_id', 'start']
 };
 
-export default { lesson };
+export default { post };
